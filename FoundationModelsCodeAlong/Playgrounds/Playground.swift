@@ -1,6 +1,7 @@
 import FoundationModels
 import Playgrounds
 
+//playground to test FindPointsOfInterestTool
 
 #Playground {
     let landmark = ModelData.landmarks[0]
