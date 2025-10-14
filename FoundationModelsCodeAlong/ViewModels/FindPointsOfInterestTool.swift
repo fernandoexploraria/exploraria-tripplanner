@@ -26,7 +26,7 @@ final class FindPointsOfInterestTool: Tool {
             longitude: landmark.longitude
         )
         return """
-        There are these \(arguments.pointOfInterest) in \(landmark.name), each place with it respective placeID: 
+        There are these \(arguments.pointOfInterest) in \(landmark.name), each one with it respective placeID: 
         \(results.joined(separator: ", "))
         """
     }

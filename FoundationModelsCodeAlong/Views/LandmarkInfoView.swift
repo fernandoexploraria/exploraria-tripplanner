@@ -1393,13 +1393,15 @@ struct LandmarkInfoView: View {
                         }
                     }()
 
+                    // Present the sheet immediately to leverage streaming updates
+                    showDirectItinerary = true
                     isGeneratingDirect = true
+
+                    // Start generation concurrently; the sheet will update as partials stream in
                     Task {
                         await generatorToUse.generateItinerary()
                         isGeneratingDirect = false
-                        if generatorToUse.itinerary != nil {
-                            showDirectItinerary = true
-                        }
+                        // Keep the sheet open; ItineraryView is designed to handle streaming/partial content
                     }
                 } label: {
                     Label("Generate Itinerary", systemImage: "sparkles")
