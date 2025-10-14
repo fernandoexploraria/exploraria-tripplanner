@@ -40,10 +40,11 @@ struct ItineraryView: View {
             }
             
             if let days = itinerary.days {
-                ForEach(days, id: \.title) { plan in
+                ForEach(Array(days.enumerated()), id: \.element.title) { index, plan in
                     DayView(
                         landmark: landmark,
-                        plan: plan
+                        plan: plan,
+                        dayIndex: index
                     )
                 }
             }
@@ -56,10 +57,10 @@ struct ItineraryView: View {
 private struct DayView: View {
     let landmark: Landmark
     let plan: DayPlan.PartiallyGenerated
+    let dayIndex: Int
 
     @State private var mapItem: MKMapItem?
-    @State private var weatherText: String?
-    @State private var weatherSymbolName: String?
+    @State private var dailyForecast: Forecast<DayWeather>?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -70,14 +71,16 @@ private struct DayView: View {
                 )
                 .overlay(alignment: .topLeading) {
                     HStack(spacing: 6) {
-                        if let name = weatherSymbolName {
-                            Image(systemName: name)
+                        if let forecast = dailyForecast, forecast.forecast.indices.contains(dayIndex) {
+                            let day = forecast.forecast[dayIndex]
+                            Image(systemName: day.symbolName)
                                 .imageScale(.small)
-                        }
-                        if let weatherText {
-                            Text(weatherText)
+                            let usesMetric = Locale.current.measurementSystem == .metric
+                            let high = usesMetric ? day.highTemperature.converted(to: .celsius).value : day.highTemperature.converted(to: .fahrenheit).value
+                            let low = usesMetric ? day.lowTemperature.converted(to: .celsius).value : day.lowTemperature.converted(to: .fahrenheit).value
+                            Text("\(Int(high))°/\(Int(low))°")
                                 .transition(.opacity)
-                        } else if weatherSymbolName == nil {
+                        } else {
                             ProgressView()
                                 .scaleEffect(0.7)
                                 .progressViewStyle(.circular)
@@ -103,8 +106,7 @@ private struct DayView: View {
                     Task {
                         guard let item = newItem else {
                             await MainActor.run {
-                                weatherText = nil
-                                weatherSymbolName = nil
+                                dailyForecast = nil
                             }
                             return
                         }
@@ -118,27 +120,18 @@ private struct DayView: View {
 
                         guard let loc else {
                             await MainActor.run {
-                                weatherText = nil
-                                weatherSymbolName = nil
+                                dailyForecast = nil
                             }
                             return
                         }
                         do {
-                            let weather = try await WeatherService.shared.weather(for: loc)
-                            let symbolName = weather.currentWeather.symbolName
-                            let measurementSystem = Locale.current.measurementSystem
-                            let usesMetric = measurementSystem == .metric
-                            let temp = weather.currentWeather.temperature
-                            let value = usesMetric ? temp.converted(to: .celsius).value : temp.converted(to: .fahrenheit).value
-                            let formatted = "\(Int(value))°"
+                            let forecast = try await WeatherService.shared.weather(for: loc, including: .daily)
                             await MainActor.run {
-                                weatherText = formatted
-                                weatherSymbolName = symbolName
+                                dailyForecast = forecast
                             }
                         } catch {
                             await MainActor.run {
-                                weatherText = nil
-                                weatherSymbolName = nil
+                                dailyForecast = nil
                             }
                         }
                     }
