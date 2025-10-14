@@ -1,0 +1,32 @@
+# Xcode
+build/
+DerivedData/
+xcuserdata/
+*.xcuserstate
+*.xccheckout
+*.xcscmblueprint
+
+# SwiftPM
+.build/
+.swiftpm/xcode/package.xcworkspace/xcuserdata/
+
+# CocoaPods
+Pods/
+
+# Carthage
+Carthage/Build/
+
+# macOS
+.DS_Store
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Compiled assets and app bundles (prevent huge build artifacts)
+*.car
+*.app/
+
+# Avoid putting images in the remote repo
+**/Assets.xcassets/
+
