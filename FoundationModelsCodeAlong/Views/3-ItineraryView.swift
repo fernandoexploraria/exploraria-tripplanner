@@ -191,6 +191,16 @@ private struct ActivityList: View {
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
                         }
+                        if let pid = activity.placeID, !pid.isEmpty {
+                            Text("ID: \(pid)")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                                .textSelection(.enabled)
+                        } else {
+                            Text("No place ID")
+                                .font(.caption)
+                                .foregroundStyle(.tertiary)
+                        }
                     }
                 }
             }

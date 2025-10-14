@@ -26,7 +26,7 @@ final class FindPointsOfInterestTool: Tool {
             longitude: landmark.longitude
         )
         return """
-        There are these \(arguments.pointOfInterest) in \(landmark.name): 
+        There are these \(arguments.pointOfInterest) in \(landmark.name), each place with it respective placeID: 
         \(results.joined(separator: ", "))
         """
     }
@@ -98,12 +98,16 @@ func getSuggestions(
         return !isDuplicate
     }
 
-    // Map to transliterated names, prefix with "TG ", and return up to three
+    // Map to transliterated names, append the hardcoded suffix with a space, and return up to three
     let names = dedupedItems.compactMap { item -> String? in
         guard let raw = item.name?.trimmingCharacters(in: .whitespacesAndNewlines), !raw.isEmpty else { return nil }
+        // Require a valid Apple Place ID (identifier raw value)
+        guard let pidRaw = item.identifier?.rawValue, !pidRaw.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return nil }
         let transliterated = raw.transliteratedLatinSafe
         let finalName = transliterated.isEmpty ? raw : transliterated
-        return "TG " + finalName
+        let suffix = "placeID:" + pidRaw
+        let prefix = "TG"
+        return prefix + " " + finalName + " " + suffix
     }
     return Array(names.prefix(3))
     //
@@ -120,3 +124,4 @@ extension Category {
         }
     }
 }
+

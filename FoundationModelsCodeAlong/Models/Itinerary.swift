@@ -42,6 +42,7 @@ struct Activity: Equatable {
     let type: Kind
     let title: String
     let description: String
+    let placeID: String?
 }
 
 @Generable
@@ -81,23 +82,27 @@ extension Itinerary {
                     Activity(
                         type: .foodAndDining,
                         title: "The Restaurant serving Sushi",
-                        description: "Visit an authentic sushi restaurant for lunch."
+                        description: "Visit an authentic sushi restaurant for lunch.",
+                        placeID: "I2CC1DF519EDD7ACD"
                     ),
                     Activity(
                         type: .shopping,
                         title: "The Plaza",
-                        description: "Enjoy souvenir shopping at various shops."
+                        description: "Enjoy souvenir shopping at various shops.",
+                        placeID: nil
                     ),
                     Activity(
                         type: .sightseeing,
                         title: "The Beautiful Cherry Blossom Park",
-                        description: "Admire the beautiful cherry blossom trees in the park."
+                        description: "Admire the beautiful cherry blossom trees in the park.",
+                        placeID: nil
                     ),
                     Activity(
                         type: .hotelAndLodging,
                         title: "The Hotel",
                         description:
-                            "Spend one final evening in the hotspring before heading home."
+                            "Spend one final evening in the hotspring before heading home.",
+                        placeID: "I2CC1DF519EDD7ACD"
                     )
                 ]
             )
