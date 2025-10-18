@@ -1,5 +1,16 @@
 [
     {
+        "name": "Grand Canyon",
+        "continent": "North America",
+        "id": 1004,
+        "placeID": "I55488B3D1D9B2D4B",
+        "longitude": -113.16096,
+        "latitude": 36.21904,
+        "span": 10.0,
+        "description": "When you look down from the rim of the Grand Canyon, you are looking at a visual story of Earth’s ancient past. Carved over millions of years by the Colorado River, the canyon stretches 277 miles in length, spans widths up to 18 miles, and reaches depths of over a mile (6,093 feet). The vibrant house of the canyon, ranging from deep reds and oranges to subtle shades of purple, it is an iconic natural wonder.\n\nThe geological story that the canyon tells spans nearly two billion years. Vishnu Schist at the bottom of the Inner Gorge is estimated to be 1.7 billion years old. The much younger Kaibab Limestone formation on the rim is the canyon’s top most rock layer, dating back a mere 270 million years. Between these two extremes, wind and water erosion have sculpted stunning cliffs, mesas, and buttes to create an intricate landscape of canyons within canyons. Every year, the seasonal variations in the Colorado River’s flow continue to carve the canyons deeper and deeper.\n\nJust as the geology story shifts with the altitude change, the plant and animal diversity changes dramatically. Flora ranges from desert species such as cacti and junipers to high-elevation forests of spruce fir or ponderosa pine, groundsels, yarrow, and lupine. Bighorn sheep, mule deer, and the elusive mountain lion are just some of the wildlife species that make their home in this ecological treasure.",
+        "shortDescription": "Carved over millions of years by the Colorado River, the canyon stretches 277 miles in length, spans widths up to 18 miles, and reaches depths of over a mile (6,093 feet)."
+    },    
+    {
         "name": "Sahara Desert",
         "continent": "Africa",
         "id": 1001,
